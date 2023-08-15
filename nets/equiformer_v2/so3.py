@@ -452,7 +452,7 @@ class SO3_Rotation(torch.nn.Module):
     def rotate_inv(self, embedding, in_lmax, in_mmax):
         in_mask = self.mapping.coefficient_idx(in_lmax, in_mmax)
         wigner_inv = self.wigner_inv[:, :, in_mask]
-        wigner_inv_rescale = self.mapping.get_rotate_inv_rescale(in_lmax, in_mmax)
+        wigner_inv_rescale = self.mapping.get_rotate_inv_rescale(in_lmax, in_mmax).to(wigner_inv)
         wigner_inv = wigner_inv * wigner_inv_rescale
         return torch.bmm(wigner_inv, embedding)
 
